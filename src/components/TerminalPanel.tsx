@@ -15,10 +15,13 @@ const colorMap: Record<string, string> = {
 };
 
 export default function TerminalPanel({ lines }: Props) {
-    const bottomRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'auto' });
+        const el = containerRef.current;
+        if (el) {
+            el.scrollTop = el.scrollHeight;
+        }
     }, [lines.length]);
 
     return (
@@ -34,19 +37,20 @@ export default function TerminalPanel({ lines }: Props) {
             </div>
 
             {/* Terminal Body */}
-            <div className="flex-1 overflow-y-auto p-3 font-mono text-xs leading-relaxed scrollbar-hide">
+            <div
+                ref={containerRef}
+                className="flex-1 overflow-y-auto p-3 font-mono text-xs leading-relaxed scrollbar-hide"
+            >
                 {lines.map((line, i) => (
                     <div
                         key={i}
-                        className={`whitespace-pre-wrap break-all animate-fade-in ${colorMap[line.color || 'green']
-                            }`}
+                        className={`whitespace-pre-wrap break-all animate-fade-in ${colorMap[line.color || 'green']}`}
                     >
                         {line.text}
                     </div>
                 ))}
                 {/* Blinking cursor */}
                 <span className="inline-block w-2 h-3.5 bg-terminal-green animate-blink align-text-bottom" />
-                <div ref={bottomRef} />
             </div>
         </div>
     );
