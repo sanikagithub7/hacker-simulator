@@ -71,6 +71,13 @@ export default function HeroSection() {
 
     const particlesLoaded = useCallback(async () => { }, []);
 
+    const scrollTo = useCallback((targetId: string) => {
+        const el = document.getElementById(targetId);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
+
     const asciiArt = `
     ┌──────────┐
     │  ┌────┐  │
@@ -84,7 +91,7 @@ export default function HeroSection() {
   `;
 
     return (
-        <section className="relative w-full h-screen overflow-hidden bg-black flex items-center justify-center">
+        <section id="hero" className="relative w-full h-screen overflow-hidden bg-black flex items-center justify-center">
             {/* Particles */}
             {init && (
                 <Particles
@@ -108,7 +115,7 @@ export default function HeroSection() {
                                 key={i}
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 + i * 0.2, duration: 0.7, ease: 'easeOut' }}
+                                transition={{ delay: 0.3 + i * 0.2, duration: 0.7, ease: 'easeOut' as const }}
                                 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-terminal-green leading-tight"
                                 style={{ textShadow: '0 0 30px rgba(0,255,65,0.3), 0 0 60px rgba(0,255,65,0.1)' }}
                             >
@@ -135,19 +142,19 @@ export default function HeroSection() {
                         transition={{ delay: 1.6, duration: 0.5 }}
                         className="flex flex-col sm:flex-row gap-4"
                     >
-                        <a
-                            href="#simulator"
-                            className="group font-mono text-sm px-8 py-3 bg-terminal-green text-black font-bold rounded hover:shadow-[0_0_30px_rgba(0,255,65,0.4)] transition-all duration-300 text-center"
+                        <button
+                            onClick={() => scrollTo('simulator')}
+                            className="group font-mono text-sm px-8 py-3 bg-terminal-green text-black font-bold rounded hover:shadow-[0_0_30px_rgba(0,255,65,0.4)] transition-all duration-300 text-center cursor-pointer border-none"
                         >
                             Launch Simulator
                             <span className="ml-2 group-hover:ml-3 transition-all">→</span>
-                        </a>
-                        <a
-                            href="#features"
-                            className="font-mono text-sm px-8 py-3 border border-terminal-green/50 text-terminal-green rounded hover:border-terminal-green hover:bg-terminal-green/5 transition-all duration-300 text-center"
+                        </button>
+                        <button
+                            onClick={() => scrollTo('features')}
+                            className="font-mono text-sm px-8 py-3 border border-terminal-green/50 text-terminal-green rounded hover:border-terminal-green hover:bg-terminal-green/5 transition-all duration-300 text-center cursor-pointer bg-transparent"
                         >
                             View Features ↓
-                        </a>
+                        </button>
                     </motion.div>
                 </div>
 

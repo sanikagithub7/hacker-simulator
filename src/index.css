@@ -5,10 +5,21 @@
 @tailwind utilities;
 
 /* ═══════════════════ BASE ═══════════════════ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 64px;
+  /* Fixed navbar height */
+}
+
+/* Offset sections so they don't hide behind fixed navbar */
+section[id] {
+  scroll-margin-top: 64px;
 }
 
 body {
@@ -18,34 +29,66 @@ body {
 }
 
 /* ═══════════════════ SCROLLBAR HIDE ═══════════════════ */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 /* ═══════════════════ SCANLINE OVERLAY ═══════════════════ */
 .scanline-overlay {
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 255, 65, 0.03) 0px,
-    rgba(0, 255, 65, 0.03) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+  background: repeating-linear-gradient(0deg,
+      rgba(0, 255, 65, 0.03) 0px,
+      rgba(0, 255, 65, 0.03) 1px,
+      transparent 1px,
+      transparent 3px);
   animation: scanline-scroll 8s linear infinite;
 }
 
 @keyframes scanline-scroll {
-  0%   { background-position-y: 0; }
-  100% { background-position-y: 100vh; }
+  0% {
+    background-position-y: 0;
+  }
+
+  100% {
+    background-position-y: 100vh;
+  }
 }
 
 /* ═══════════════════ GLITCH ═══════════════════ */
 @keyframes glitch {
-  0%   { transform: translate(0); filter: none; }
-  20%  { transform: translate(-3px, 1px); filter: hue-rotate(90deg); }
-  40%  { transform: translate(2px, -1px); filter: hue-rotate(-90deg) saturate(2); }
-  60%  { transform: translate(-1px, 2px); filter: hue-rotate(45deg); }
-  80%  { transform: translate(3px, -2px); filter: hue-rotate(-45deg) brightness(1.5); }
-  100% { transform: translate(0); filter: none; }
+  0% {
+    transform: translate(0);
+    filter: none;
+  }
+
+  20% {
+    transform: translate(-3px, 1px);
+    filter: hue-rotate(90deg);
+  }
+
+  40% {
+    transform: translate(2px, -1px);
+    filter: hue-rotate(-90deg) saturate(2);
+  }
+
+  60% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(45deg);
+  }
+
+  80% {
+    transform: translate(3px, -2px);
+    filter: hue-rotate(-45deg) brightness(1.5);
+  }
+
+  100% {
+    transform: translate(0);
+    filter: none;
+  }
 }
 
 .glitch-active {
@@ -53,20 +96,25 @@ body {
 }
 
 .glitch-overlay-effect {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    rgba(0, 255, 65, 0.05) 2px,
-    transparent 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent 0px,
+      rgba(0, 255, 65, 0.05) 2px,
+      transparent 4px);
   mix-blend-mode: screen;
   animation: glitch 0.5s ease-in-out;
 }
 
 /* ═══════════════════ BLINK CURSOR ═══════════════════ */
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 .animate-blink {
@@ -75,8 +123,13 @@ body {
 
 /* ═══════════════════ FADE IN ═══════════════════ */
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
@@ -85,8 +138,13 @@ body {
 
 /* ═══════════════════ FADE OUT ═══════════════════ */
 @keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .animate-fade-out {
@@ -95,8 +153,15 @@ body {
 
 /* ═══════════════════ FLOAT ═══════════════════ */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .animate-float {
@@ -105,16 +170,47 @@ body {
 
 /* ═══════════════════ SCREEN SHAKE ═══════════════════ */
 @keyframes screen-shake {
-  0%, 100% { transform: translate(0); }
-  10% { transform: translate(-5px, 3px); }
-  20% { transform: translate(4px, -2px); }
-  30% { transform: translate(-3px, 4px); }
-  40% { transform: translate(5px, -4px); }
-  50% { transform: translate(-4px, 2px); }
-  60% { transform: translate(3px, -3px); }
-  70% { transform: translate(-2px, 5px); }
-  80% { transform: translate(4px, -2px); }
-  90% { transform: translate(-3px, 3px); }
+
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  10% {
+    transform: translate(-5px, 3px);
+  }
+
+  20% {
+    transform: translate(4px, -2px);
+  }
+
+  30% {
+    transform: translate(-3px, 4px);
+  }
+
+  40% {
+    transform: translate(5px, -4px);
+  }
+
+  50% {
+    transform: translate(-4px, 2px);
+  }
+
+  60% {
+    transform: translate(3px, -3px);
+  }
+
+  70% {
+    transform: translate(-2px, 5px);
+  }
+
+  80% {
+    transform: translate(4px, -2px);
+  }
+
+  90% {
+    transform: translate(-3px, 3px);
+  }
 }
 
 .animate-screen-shake {
@@ -133,8 +229,13 @@ body {
 }
 
 @keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ═══════════════════ SELECTION ═══════════════════ */
